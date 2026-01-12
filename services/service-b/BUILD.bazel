@@ -1,0 +1,149 @@
+load("@protobuf//bazel:proto_library.bzl", "proto_library")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_load", "oci_push")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("@rules_proto_grpc_java//:defs.bzl", "java_grpc_library")
+load("@rules_spring//springboot:springboot.bzl", "springboot")
+load("//build_defs/k8s:service_manifest.bzl", "k8s_service_manifest")
+load("//build_defs/k8s/postgres:postgres.bzl", "postgres_service")
+load("//build_defs/spring/dependencies:dependency_groups.bzl", "GRPC_STARTER_DEPS", "MICROSERVICE_WEB_DEPS")
+
+package(default_visibility = ["//visibility:public"])
+
+proto_library(
+    name = "service-b-proto",
+    srcs = glob(["src/proto/**/*.proto"]),
+    strip_import_prefix = "src/proto",
+    deps = [
+        "@protobuf//:empty_proto",
+        "@protobuf//:timestamp_proto",
+    ],
+)
+
+java_grpc_library(
+    name = "service-b-grpc",
+    protos = [":service-b-proto"],
+    deps = [
+        "@protobuf//:protobuf_java",
+    ],
+)
+
+springboot_deps = [
+    "//build_defs/spring/import_bundles:springboot_required_deps",
+    "//libs/common-api:common-api",
+    "//libs/common-web-service:common-web-service",
+] + MICROSERVICE_WEB_DEPS + GRPC_STARTER_DEPS
+
+java_plugin(
+    name = "mapstruct_plugin",
+    processor_class = "org.mapstruct.ap.MappingProcessor",
+    deps = ["@maven//:org_mapstruct_mapstruct_processor"],
+)
+
+java_library(
+    name = "service-b",
+    srcs = glob(["src/main/java/org/myapplication/serviceb/**/*.java"]),
+    plugins = [
+        ":mapstruct_plugin",
+    ],
+    resources = glob([
+        "src/main/resources/**",
+    ]),
+    deps = springboot_deps + [":service-b-grpc"] + [
+        # State Machine
+        "@maven//:org_springframework_statemachine_spring_statemachine_core",
+
+        # JPA
+        "@maven//:jakarta_persistence_jakarta_persistence_api",
+        "@maven//:org_springframework_boot_spring_boot_starter_data_jpa",
+        "@maven//:org_springframework_data_spring_data_jpa",
+
+        # Hibernate
+        "@maven//:org_hibernate_orm_hibernate_core",
+        "@maven//:org_hibernate_validator_hibernate_validator",
+
+        # Postgres + Liquibase
+        "@maven//:org_postgresql_postgresql",
+        "@maven//:org_liquibase_liquibase_core",
+    ],
+)
+
+springboot(
+    name = "service-b-spring",
+    boot_app_class = "org.myapplication.serviceb.service.ServiceBApplication",
+    boot_launcher_class = "org.springframework.boot.loader.launch.JarLauncher",
+    java_library = ":service-b",
+)
+
+genrule(
+    name = "wait-for-keycloak",
+    srcs = ["container/wait-for-keycloak.sh"],
+    outs = ["start.sh"],
+    cmd = "cp $< $@",
+)
+
+pkg_tar(
+    name = "service-b-spring-tar",
+    srcs = [
+        ":service-b-spring",
+        ":wait-for-keycloak",
+    ],
+    mode = "0755",
+    package_dir = "/app",
+)
+
+oci_image(
+    name = "service-b-image_arm64",
+    base = "@java-base_linux_arm64_v8",
+    entrypoint = ["/app/start.sh"],
+    tars = [":service-b-spring-tar"],
+)
+
+oci_image(
+    name = "service-b-image_amd64",
+    base = "@java-base_linux_amd64",
+    entrypoint = ["/app/service-b-spring"],
+    tars = [":service-b-spring-tar"],
+)
+
+oci_image_index(
+    name = "service-b-image",
+    images = [
+        ":service-b-image_arm64",
+        ":service-b-image_amd64",
+    ],
+)
+
+oci_load(
+    name = "service-b-tarball-oci",
+    format = "oci",
+    image = ":service-b-image",
+    repo_tags = ["myapplication/service-b:latest"],
+)
+
+filegroup(
+    name = "service-b-tarball",
+    srcs = [":service-b-tarball-oci"],
+    output_group = "tarball",
+)
+
+## DEFINE K8S PIPELINE MANIFESTS
+postgres_service(
+    name = "postgres-service-b",
+    db_name = "service-b_db",
+    password_secret_name = "service-b-db-secret",
+    service_name = "service-b",
+)
+
+k8s_service_manifest(
+    name = "service-b_manifests",
+    library_labels = ["//libs/common-web-service"],
+    service_name = "service-b",
+)
+
+filegroup(
+    name = "manifests",
+    srcs = [
+        ":postgres-service-b",
+        ":service-b_manifests",
+    ],
+)

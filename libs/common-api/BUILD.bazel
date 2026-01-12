@@ -1,0 +1,15 @@
+load("//build_defs/spring/dependencies:dependency_groups.bzl", "MICROSERVICE_API_DEPS")
+
+java_library(
+    name = "common-api",
+    srcs = glob(["src/main/java/org/myapplication/common/api/**/*.java"]),
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "@maven//:jakarta_persistence_jakarta_persistence_api",
+        "@maven//:jakarta_validation_jakarta_validation_api",
+        "@maven//:org_hibernate_orm_hibernate_core",
+        "@maven//:org_springframework_boot_spring_boot_starter_web",
+    ] + MICROSERVICE_API_DEPS,
+)

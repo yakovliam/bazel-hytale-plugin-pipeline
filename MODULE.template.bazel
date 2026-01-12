@@ -1,0 +1,38 @@
+module(
+    name = "myapplication",
+    version = "0.0.0",
+)
+
+bazel_dep(name = "rules_spring", version = "2.6.3")
+bazel_dep(name = "rules_jvm_external", version = "6.8")
+bazel_dep(name = "rules_java", version = "8.16.1")
+
+bazel_dep(name = "rules_proto_grpc_java", version = "5.8.0")
+bazel_dep(name = "protobuf", version = "31.1")
+
+bazel_dep(name = "rules_oci", version = "2.2.6")
+bazel_dep(name = "rules_pkg", version = "1.1.0")
+
+bazel_dep(name = "rules_helm", version = "0.20.1")
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+
+### MAVEN_DEPS_SECTION ###
+
+use_repo(maven, "maven")
+
+oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
+
+oci.pull(
+    name = "java-base",
+    image = "docker.io/library/eclipse-temurin:21.0.8_9-jdk",
+    digest = "sha256:7d1d666ddafac14da0ded6b4b076becf76cf88b31f9d7953a76555cc82f86511",
+    platforms = ["linux/arm64/v8", "linux/amd64"],
+)
+
+use_repo(
+    oci,
+    "java-base",
+    "java-base_linux_arm64_v8",
+    "java-base_linux_amd64",
+)

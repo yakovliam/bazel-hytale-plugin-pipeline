@@ -1,0 +1,24 @@
+# **********************************
+# JAVA COMPILATION
+# **********************************
+
+# Spring Boot 3 requires JDK17+
+
+# Compile and Test/Run JDKs
+common --java_language_version=21 # used for compilation (version for compiling java sources)
+common --java_runtime_version=21  # used for execution & testing java binaries
+
+# Tools - the jdk used for running tools that get executed during the build
+common --tool_java_language_version=21
+common --tool_java_runtime_version=21
+
+--repo_env=DOCKER_CONFIG=/bazel_config/credentials/docker
+
+# Clean up symlinks
+# set to "normal" to bring back the symlinks in the root workspace directory
+build --experimental_convenience_symlinks=clean
+
+# Re-direct symlinks to a hidden folder
+# Maybe you want the symlinks, but you don't want them in your face...
+# uncomment this for that.
+# build --symlink_prefix=.bazel/

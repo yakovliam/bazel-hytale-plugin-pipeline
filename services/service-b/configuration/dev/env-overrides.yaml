@@ -1,0 +1,33 @@
+# Service-B Overrides Dev #
+# Datasource Configuration
+- name: SPRING_DATASOURCE_URL
+  value: "jdbc:postgresql://postgres-service-b:5432/service-b_db"
+- name: SPRING_DATASOURCE_USERNAME
+  value: "service-b_user"
+- name: SPRING_DATASOURCE_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: service-b-db-secret
+      key: password
+
+# Application Configuration
+- name: SERVER_PORT
+  value: "8080"
+- name: LOGGING_LEVEL_ORG_MYAPPLICATION_SERVICE_B_SERVICE
+  value: DEBUG
+- name: LOGGING_LEVEL_ROOT
+  value: DEBUG
+- name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+  value: org.postgresql.Driver
+- name: SPRING_JPA_DATABASE_PLATFORM
+  value: org.hibernate.dialect.PostgreSQLDialect
+- name: SPRING_LIQUIBASE_CHANGE_LOG
+  value: "classpath:db/liquibase-changelog.xml"
+- name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_ID
+  value: myapplication-service-b
+- name: SERVICE_SERVICE_B_K8S_DNS_NAME
+  value: service-b-grpc
+- name: SERVICE_SERVICE_B_PORT
+  value: "9090"
+###########################
+

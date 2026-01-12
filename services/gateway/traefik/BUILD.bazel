@@ -1,0 +1,19 @@
+load("@rules_helm//helm:defs.bzl", "helm_chart", "helm_template")
+
+package(default_visibility = ["//visibility:public"])
+
+helm_chart(
+    name = "chart",
+)
+
+helm_template(
+    name = "deployment",
+    chart = ":chart",
+    values = ["//services/gateway/values"],
+    out = "traefik-deployment.yaml.out"
+)
+
+filegroup(
+    name = "crds",
+    srcs = glob(["crds/*.yaml"]),
+)

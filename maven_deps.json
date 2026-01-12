@@ -1,0 +1,115 @@
+{
+  "variables": {
+    "spring_boot_version": "3.5.8",
+    "grpc_version": "1.77.0",
+    "protobuf_version": "4.31.1",
+    "mapstruct_version": "1.6.3",
+    "caffeine_version": "3.2.2",
+    "okhttp_version": "4.12.0",
+    "gson_version": "2.13.1",
+    "slf4j_version": "2.0.16",
+    "logback_version": "1.5.18",
+    "spring_grpc_version": "0.12.0",
+    "jakarta_persistence_version": "3.1.0",
+    "hibernate_version": "6.6.29.Final",
+    "spring_gateway_version": "4.3.2",
+    "spring_framework_version": "6.1.14",
+    "auth0_jwt_version": "4.5.0"
+  },
+  "dependencies": {
+    "spring_boot": [
+      "org.springframework.boot:spring-boot-starter-security:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-starter-validation:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-starter-web:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-starter-cache:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-starter-oauth2-client:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-starter-oauth2-resource-server:${spring_boot_version}",
+      "org.springframework.boot:spring-boot:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-actuator:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-actuator-autoconfigure:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-autoconfigure:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-configuration-processor:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-loader:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-loader-tools:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-starter:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-starter-actuator:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-starter-freemarker:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-starter-jdbc:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-starter-data-jpa:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-starter-jetty:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-starter-logging:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-starter-security:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-starter-test:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-starter-web:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-test:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-test-autoconfigure:${spring_boot_version}",
+      "org.springframework.boot:spring-boot-starter-thymeleaf:${spring_boot_version}"
+    ],
+    "spring_framework": [
+      "org.springframework:spring-aop:${spring_framework_version}",
+      "org.springframework:spring-aspects:${spring_framework_version}",
+      "org.springframework:spring-beans:${spring_framework_version}",
+      "org.springframework:spring-context:${spring_framework_version}",
+      "org.springframework:spring-context-support:${spring_framework_version}",
+      "org.springframework:spring-core:${spring_framework_version}",
+      "org.springframework:spring-expression:${spring_framework_version}",
+      "org.springframework:spring-jdbc:${spring_framework_version}",
+      "org.springframework:spring-test:${spring_framework_version}",
+      "org.springframework:spring-tx:${spring_framework_version}",
+      "org.springframework:spring-web:${spring_framework_version}",
+      "org.springframework:spring-webmvc:${spring_framework_version}"
+    ],
+    "spring_grpc": [
+      "org.springframework.grpc:spring-grpc-spring-boot-starter:${spring_grpc_version}"
+    ],
+    "spring_statemachine": [
+      "org.springframework.statemachine:spring-statemachine-core:4.0.1"
+    ],
+    "caching": [
+      "com.github.ben-manes.caffeine:caffeine:${caffeine_version}"
+    ],
+    "http": [
+      "com.squareup.okhttp3:okhttp:${okhttp_version}"
+    ],
+    "mapping": [
+      "org.mapstruct:mapstruct:${mapstruct_version}",
+      "org.mapstruct:mapstruct-processor:${mapstruct_version}"
+    ],
+    "grpc": [
+      "io.grpc:grpc-services:${grpc_version}",
+      "io.grpc:grpc-protobuf:${grpc_version}"
+    ],
+    "protobuf": [
+      "com.google.protobuf:protobuf-java:${protobuf_version}"
+    ],
+    "json": [
+      "com.google.code.gson:gson:${gson_version}"
+    ],
+    "logging": [
+      "org.slf4j:slf4j-api:${slf4j_version}",
+      "ch.qos.logback:logback-classic:${logback_version}"
+    ],
+    "jakarta": [
+      "jakarta.persistence:jakarta.persistence-api:${jakarta_persistence_version}"
+    ],
+    "hibernate": [
+      "org.hibernate.orm:hibernate-core:${hibernate_version}"
+    ],
+    "spring_gateway": [
+      "org.springframework.cloud:spring-cloud-starter-gateway-server-webmvc:${spring_gateway_version}"
+    ],
+    "postgresql": [
+      "org.postgresql:postgresql:42.7.4"
+    ],
+    "liquibase": [
+      "org.liquibase:liquibase-core:4.33.0"
+    ],
+    "retrofit": [
+      "com.squareup.retrofit2:retrofit:3.0.0",
+      "com.squareup.retrofit2:converter-gson:3.0.0"
+    ],
+    "auth0": [
+      "com.auth0:java-jwt:${auth0_jwt_version}"
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+load(":flags.bzl", "pipeline")
+
+pipeline(name = "pipeline", build_setting_default = "dev")
+
+config_setting(name = "dev",  flag_values = {":pipeline": "dev"})
+config_setting(name = "prod", flag_values = {":pipeline": "prod"})

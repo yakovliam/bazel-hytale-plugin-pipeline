@@ -1,0 +1,25 @@
+package(default_visibility = ["//visibility:public"])
+
+genrule(
+    name = "local-tls-secret",
+    outs = ["local-tls-secret.yaml"],
+    cmd = """
+    # 1. Generate the private key and cert
+    openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes -subj '/CN=localhost'
+
+    # 2. Use kubectl to generate the YAML manifest (dry-run) without hitting the cluster
+    kubectl create secret tls local-selfsigned-tls \
+        --cert=cert.pem \
+        --key=key.pem \
+        --dry-run=client -o yaml > $@
+    """,
+)
+
+filegroup(
+    name = "manifests",
+    srcs = [
+        ":local-tls-secret",
+        "//services/gateway/traefik:crds",
+        "//services/gateway/traefik:deployment"
+    ]
+)
