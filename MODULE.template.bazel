@@ -21,21 +21,5 @@ http_jar = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_j
 http_jar(
     name = "remote-hytale-server",
     url = "https://artifacts.yakovliam.com/HytaleServer.jar",
-    # sha256 = "<SHA‑256 checksum here>", # Not yet implemented on the yakovliam artifacts server
+    sha256 = "688c609d8381a0f0efb31f52369ffb961fbb431c4c19a1f43f51e1e6039a478a",
 )
-
-# http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-#
-# http_archive(
-#     name = "hytale-server-remote",
-#     url = "https://artifacts.yakovliam.com/HytaleServer.zip",
-#     # sha256 = "<SHA256‑of‑zip>", # Not yet implemented on the yakovliam artifacts server
-#     # You’ll need to provide a build_file or build_file_content
-#     build_file_content = """
-# java_import(
-#     name = "hytale-server-jar",
-#     jars = ["jar/HytaleServer.jar"],
-#     visibility = ["//visibility:public"],
-# )
-# """,
-# )
