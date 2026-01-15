@@ -1,4 +1,5 @@
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+load("//build_defs/utils/environment:environment_manifest.bzl", "environment_manifest")
 
 provided_deps = [
     "//build_defs/hytale/import_bundles:hytale-required-deps",
@@ -24,11 +25,27 @@ java_library(
     deps = shade_deps + provided_deps,
 )
 
+environment_manifest(
+    name = "manifest",
+    library_labels = ["//libs/common-api"],
+)
+
+genrule(
+    name = "resource-environment",
+    srcs = [":manifest_root"],
+    outs = ["src/main/resources/env.yaml"],
+    cmd = "cp $< $@",
+)
+
 java_binary(
     name = artifact_name,
     main_class = "none",
-    resources = glob(["src/main/resources/**"]),
-    runtime_deps = [":plugin_lib"] + provided_deps,
+    resources = glob(["src/main/resources/**"]) + [
+        ":resource-environment",
+    ],
+    runtime_deps = [
+        ":plugin_lib",
+    ] + provided_deps,
 )
 
 genrule(
