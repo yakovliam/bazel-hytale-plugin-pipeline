@@ -78,3 +78,6 @@ eclipse-*bin/
 .bazelversion
 # User-specific .bazelrc
 user.bazelrc
+
+### Server Environment ###
+environment/

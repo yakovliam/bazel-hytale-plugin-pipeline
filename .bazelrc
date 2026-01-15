@@ -16,9 +16,9 @@ common --tool_java_runtime_version=21
 
 # Clean up symlinks
 # set to "normal" to bring back the symlinks in the root workspace directory
-build --experimental_convenience_symlinks=clean
+# build --experimental_convenience_symlinks=ignore
 
 # Re-direct symlinks to a hidden folder
 # Maybe you want the symlinks, but you don't want them in your face...
 # uncomment this for that.
-# build --symlink_prefix=.bazel/
+build --symlink_prefix=.bazel/

@@ -1,0 +1,6 @@
+{
+  "Group": "org.example",
+  "Name": "MyPlugin",
+  "Version": "0.0.0-SNAPSHOT",
+  "Main": "org.example.myplugin.MyPlugin"
+}

@@ -1,19 +1,14 @@
 module(
-    name = "myapplication",
+    name = "bazel-hytale-pipeline_example-plugin",
     version = "0.0.0",
 )
 
-bazel_dep(name = "rules_spring", version = "2.6.3")
 bazel_dep(name = "rules_jvm_external", version = "6.8")
 bazel_dep(name = "rules_java", version = "8.16.1")
 
 bazel_dep(name = "rules_proto_grpc_java", version = "5.8.0")
 bazel_dep(name = "protobuf", version = "31.1")
-
-bazel_dep(name = "rules_oci", version = "2.2.6")
 bazel_dep(name = "rules_pkg", version = "1.1.0")
-
-bazel_dep(name = "rules_helm", version = "0.20.1")
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 
@@ -21,18 +16,26 @@ maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 
 use_repo(maven, "maven")
 
-oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
+http_jar = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_jar")
 
-oci.pull(
-    name = "java-base",
-    image = "docker.io/library/eclipse-temurin:21.0.8_9-jdk",
-    digest = "sha256:7d1d666ddafac14da0ded6b4b076becf76cf88b31f9d7953a76555cc82f86511",
-    platforms = ["linux/arm64/v8", "linux/amd64"],
+http_jar(
+    name = "remote-hytale-server",
+    url = "https://artifacts.yakovliam.com/HytaleServer.jar",
+    # sha256 = "<SHA‑256 checksum here>", # Not yet implemented on the yakovliam artifacts server
 )
 
-use_repo(
-    oci,
-    "java-base",
-    "java-base_linux_arm64_v8",
-    "java-base_linux_amd64",
-)
+# http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+#
+# http_archive(
+#     name = "hytale-server-remote",
+#     url = "https://artifacts.yakovliam.com/HytaleServer.zip",
+#     # sha256 = "<SHA256‑of‑zip>", # Not yet implemented on the yakovliam artifacts server
+#     # You’ll need to provide a build_file or build_file_content
+#     build_file_content = """
+# java_import(
+#     name = "hytale-server-jar",
+#     jars = ["jar/HytaleServer.jar"],
+#     visibility = ["//visibility:public"],
+# )
+# """,
+# )

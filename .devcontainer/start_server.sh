@@ -1,0 +1,1 @@
+java -jar HytaleServer.jar --assets Assets.zip --bind 0.0.0.0:5520
