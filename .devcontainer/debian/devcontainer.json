@@ -11,7 +11,6 @@
   },
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
-
   "appPort": [
     "5520:5520/udp"
   ],
@@ -19,11 +18,18 @@
   "customizations": {
     "jetbrains": {
       "backend": "IntelliJ"
+    },
+    "vscode": {
+      "extensions": [
+        "guw.bazel-eclipse-vscode",
+        "BazelBuild.vscode-bazel"
+      ]
     }
   },
   // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
   "remoteUser": "root",
-  workspaceFolder: "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+  "workspaceFolder": "/workspace",
   // do command after creation:
   "postCreateCommand": "cd /workspace/.devcontainer && chmod +x ./setup_server.sh && ./setup_server.sh"
 }
