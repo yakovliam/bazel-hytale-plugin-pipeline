@@ -8,9 +8,17 @@ import org.example.myplugin.command.ExampleCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Main class for the MyPlugin plugin.
+ */
 public class MyPlugin extends JavaPlugin {
     private static final Logger LOGGER = LoggerFactory.getLogger(MyPlugin.class);
 
+    /**
+     * Constructor for MyPlugin.
+     *
+     * @param init The JavaPluginInit instance.
+     */
     public MyPlugin(@NonNullDecl JavaPluginInit init) {
         super(init);
     }

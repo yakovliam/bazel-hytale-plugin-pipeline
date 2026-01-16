@@ -21,7 +21,9 @@ public class ExampleCommand extends AbstractPlayerCommand {
     }
 
     @Override
-    protected void execute(@NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store, @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef, @NonNullDecl World world) {
-        EventTitleUtil.showEventTitleToPlayer(playerRef, Message.raw("Primary title"), Message.raw("Secondary title"), true);
+    protected void execute(@NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store,
+            @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef, @NonNullDecl World world) {
+        EventTitleUtil.showEventTitleToPlayer(playerRef, Message.raw("Primary title"), Message.raw("Secondary title"),
+                true);
     }
 }
