@@ -31,5 +31,5 @@
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
   "workspaceFolder": "/workspace",
   // do command after creation:
-  "postCreateCommand": "cd /workspace/.devcontainer && chmod +x ./setup_server.sh && ./setup_server.sh"
+  "postCreateCommand": "cd /workspace/.devcontainer && chmod +x ./install-dependencies.sh && ./install-dependencies.sh"
 }
