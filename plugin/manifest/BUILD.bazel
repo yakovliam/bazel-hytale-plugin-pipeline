@@ -1,0 +1,7 @@
+load("//plugin/manifest:constants.bzl", "CONFIG")
+load("//plugin/manifest:manifest_rules.bzl", "generate_manifest")
+
+generate_manifest(
+    name = "manifest",
+    config_dict = CONFIG,
+)

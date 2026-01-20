@@ -1,0 +1,3 @@
+filegroup(name = "env_base", srcs = ["base/env.yaml"], visibility = ["//visibility:public"])
+filegroup(name = "env_dev",  srcs = ["dev/env.yaml"],  visibility = ["//visibility:public"])
+filegroup(name = "env_prod", srcs = ["prod/env.yaml"], visibility = ["//visibility:public"])

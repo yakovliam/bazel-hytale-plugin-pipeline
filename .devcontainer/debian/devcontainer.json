@@ -1,0 +1,29 @@
+{
+  "name": "Debian",
+  "image": "mcr.microsoft.com/devcontainers/base:bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {},
+    "ghcr.io/balazs23/devcontainers-features/bazel:1": {}
+  },
+  "appPort": [
+    "5520:5520/udp"
+  ],
+  "customizations": {
+    "jetbrains": {
+      "backend": "IntelliJ"
+    },
+    "vscode": {
+      "extensions": [
+        "guw.bazel-eclipse-vscode",
+        "BazelBuild.vscode-bazel"
+      ]
+    }
+  },
+  "remoteUser": "root",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+  "workspaceFolder": "/workspace",
+  "postCreateCommand": "cd /workspace/.devcontainer && chmod +x ./install-dependencies.sh && ./install-dependencies.sh",
+  "mounts": [
+    "source=${localWorkspaceFolder}/.local-assets,target=/workspace/.local-assets,type=bind,consistency=cached"
+  ]
+}

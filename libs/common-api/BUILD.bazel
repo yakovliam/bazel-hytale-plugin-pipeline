@@ -1,0 +1,12 @@
+load("@rules_java//java:defs.bzl", "java_library")
+
+java_library(
+    name = "common-api",
+    srcs = glob(["src/main/java/org/example/common/api/**/*.java"]),
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "//build_defs/hytale/import_bundles:hytale-required-deps",
+    ],
+)

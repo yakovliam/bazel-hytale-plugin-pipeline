@@ -1,0 +1,9 @@
+java_library(
+    name = "hytale-required-deps",
+    srcs = [],
+    neverlink = 1,
+    visibility = ["//visibility:public"],
+    exports = [
+        "@remote-hytale-server//jar",
+    ],
+)

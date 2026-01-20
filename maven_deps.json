@@ -1,0 +1,42 @@
+{
+  "variables": {
+    "grpc_version": "1.77.0",
+    "protobuf_version": "4.31.1",
+    "mapstruct_version": "1.6.3",
+    "caffeine_version": "3.2.2",
+    "okhttp_version": "4.12.0",
+    "gson_version": "2.13.1",
+    "slf4j_version": "2.0.16",
+    "logback_version": "1.5.18"
+  },
+  "dependencies": {
+    "caching": [
+      "com.github.ben-manes.caffeine:caffeine:${caffeine_version}"
+    ],
+    "http": [
+      "com.squareup.okhttp3:okhttp:${okhttp_version}"
+    ],
+    "mapping": [
+      "org.mapstruct:mapstruct:${mapstruct_version}",
+      "org.mapstruct:mapstruct-processor:${mapstruct_version}"
+    ],
+    "grpc": [
+      "io.grpc:grpc-services:${grpc_version}",
+      "io.grpc:grpc-protobuf:${grpc_version}"
+    ],
+    "protobuf": [
+      "com.google.protobuf:protobuf-java:${protobuf_version}"
+    ],
+    "json": [
+      "com.google.code.gson:gson:${gson_version}"
+    ],
+    "logging": [
+      "org.slf4j:slf4j-api:${slf4j_version}",
+      "ch.qos.logback:logback-classic:${logback_version}"
+    ],
+    "retrofit": [
+      "com.squareup.retrofit2:retrofit:3.0.0",
+      "com.squareup.retrofit2:converter-gson:3.0.0"
+    ]
+  }
+}
