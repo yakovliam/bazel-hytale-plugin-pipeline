@@ -2,12 +2,7 @@ load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("//build_defs/utils/environment:environment_manifest.bzl", "environment_manifest")
 load("//plugin/manifest:constants.bzl", "ARTIFACT_NAME", "VERSION")
 
-provided_deps = [
-    "//build_defs/hytale/import_bundles:hytale-required-deps",
-]
-
 shade_deps = [
-    "//libs/common-api:common-api",
     "@maven//:org_slf4j_slf4j_api",
     "@maven//:ch_qos_logback_logback_classic",
     "@maven//:com_google_code_gson_gson",
@@ -17,49 +12,44 @@ shade_deps = [
 _jar_name = "{}-{}.jar".format(ARTIFACT_NAME, VERSION)
 
 java_library(
+    name = "server_api",
+    neverlink = True,
+    exports = [
+        "@maven//:com_hypixel_hytale_Server",
+    ],
+)
+
+java_library(
     name = "plugin_lib",
     srcs = glob(["src/main/java/com/example/exampleplugin/**/*.java"]),
-    deps = shade_deps + provided_deps,
-)
-
-environment_manifest(
-    name = "env-manifest",
-    library_labels = ["//libs/common-api"],
-)
-
-genrule(
-    name = "resource-environment",
-    srcs = [":env-manifest"],
-    outs = ["src/main/resources/env.yaml"],
-    cmd = "cp $< $@",
+    deps = shade_deps + [
+        ":server_api",
+    ],
 )
 
 java_library(
     name = "assets_lib",
-    resources = ["//plugin/assets"],
     resource_strip_prefix = "plugin/assets",
+    resources = ["//plugin/assets"],
     visibility = ["//visibility:public"],
 )
 
 java_library(
     name = "manifest_lib",
-    resources = ["//plugin/manifest:manifest"],
     resource_strip_prefix = "plugin/manifest",
+    resources = ["//plugin/manifest"],
     visibility = ["//visibility:public"],
 )
 
 java_binary(
     name = ARTIFACT_NAME,
+    create_executable = False,
     main_class = "none",
-    resources = [
-        "//plugin/manifest:manifest",
-        ":resource-environment",
-    ],
     runtime_deps = [
-        ":plugin_lib",
         ":assets_lib",
         ":manifest_lib",
-    ] + provided_deps,
+        ":plugin_lib",
+    ],
 )
 
 genrule(

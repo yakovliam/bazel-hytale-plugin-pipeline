@@ -37,6 +37,9 @@
     "retrofit": [
       "com.squareup.retrofit2:retrofit:3.0.0",
       "com.squareup.retrofit2:converter-gson:3.0.0"
+    ],
+    "hytale": [
+      "com.hypixel.hytale:Server:2026.02.06-0baf7c5aa"
     ]
   }
 }

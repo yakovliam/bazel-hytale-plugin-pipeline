@@ -41,6 +41,7 @@ def generate_maven_section():
     section.append('    ],')
     section.append('    repositories = [')
     section.append('        "https://repo1.maven.org/maven2",')
+    section.append('        "https://maven.hytale.com/pre-release",')
     section.append('    ],')
     section.append('    generate_compat_repositories = True,')
     section.append(')')

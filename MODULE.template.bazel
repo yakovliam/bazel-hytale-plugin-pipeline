@@ -15,6 +15,3 @@ maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 ### MAVEN_DEPS_SECTION ###
 
 use_repo(maven, "maven")
-
-hytale = use_extension("//build_defs/hytale/import_bundles:extension.bzl", "hytale_ext")
-use_repo(hytale, "remote_hytale_server")
